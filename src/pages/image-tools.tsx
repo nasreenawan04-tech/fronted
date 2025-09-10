@@ -10,7 +10,7 @@ import { searchAndFilterTools } from '@/lib/search';
 const ImageTools = () => {
   const [location] = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredTools, setFilteredTools] = useState(tools.filter(tool => tool.category === 'image'));
+  const [filteredTools, setFilteredTools] = useState(tools.filter(tool => tool.category.includes('image')));
 
   // Parse URL parameters
   useEffect(() => {

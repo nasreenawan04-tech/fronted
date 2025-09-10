@@ -126,7 +126,7 @@ const WatermarkPDFTool = () => {
       const textHeight = watermarkOptions.fontSize;
       const color = hexToRgb(watermarkOptions.color);
 
-      pages.forEach((page) => {
+      pages.forEach((page: any) => {
         const { width, height } = page.getSize();
         const position = getPositionCoordinates(width, height, textWidth, textHeight);
         

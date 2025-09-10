@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
@@ -73,25 +72,25 @@ export default function CompoundInterestCalculator() {
     let totalContributions = p;
     let totalSIPContributions = 0;
     const yearlyBreakdown = [];
-    
+
     for (let year = 1; year <= years; year++) {
       const isPartialYear = year > t;
       const yearDuration = isPartialYear ? t - (year - 1) : 1;
-      
+
       // Calculate compound growth for existing amount
       const growthFactor = Math.pow((1 + r / n), n * yearDuration);
       currentAmount *= growthFactor;
-      
+
       // Add SIP contributions throughout the year
       if (enableSIP && sip > 0) {
         const periodsInYear = sipFreq * yearDuration;
         let currentSIP = sip;
-        
+
         // Apply step-up to SIP amount
         if (stepUp > 0 && year > 1) {
           currentSIP = sip * Math.pow(1 + stepUp, year - 1);
         }
-        
+
         for (let period = 1; period <= periodsInYear; period++) {
           const remainingTime = yearDuration - (period / sipFreq);
           const contributionGrowth = remainingTime > 0 ? Math.pow((1 + r / n), n * remainingTime) : 1;
@@ -100,11 +99,11 @@ export default function CompoundInterestCalculator() {
           totalContributions += currentSIP;
         }
       }
-      
-      const previousAmount = year === 1 ? p : yearlyBreakdown[year - 2].amount;
-      const interestEarned = currentAmount - previousAmount - (enableSIP ? totalSIPContributions - (year > 1 ? yearlyBreakdown[year - 2].cumulativeContributions - p : 0) : 0);
+
+      const previousAmount: number = yearlyBreakdown.length > 0 ? yearlyBreakdown[yearlyBreakdown.length - 1].amount : p;
+      const interestEarned: number = currentAmount - previousAmount - (enableSIP ? totalSIPContributions - (year > 1 ? yearlyBreakdown[year - 2].cumulativeContributions - p : 0) : 0);
       const realValue = currentAmount / Math.pow(1 + inflation, year);
-      
+
       yearlyBreakdown.push({
         year,
         amount: currentAmount,
@@ -128,23 +127,23 @@ export default function CompoundInterestCalculator() {
       let timeToGoal = 0;
       let testAmount = p;
       let testContributions = p;
-      
+
       while (testAmount < target && timeToGoal < 50) { // Max 50 years
         timeToGoal += 1;
         testAmount *= Math.pow((1 + r / n), n);
-        
+
         if (enableSIP && sip > 0) {
           const yearSIP = stepUp > 0 ? sip * Math.pow(1 + stepUp, timeToGoal - 1) : sip;
           testAmount += yearSIP * sipFreq * ((Math.pow(1 + r/n, n) - 1) / (r/n));
           testContributions += yearSIP * sipFreq;
         }
       }
-      
+
       // Calculate required monthly contribution to reach goal
       const requiredTotal = target - p * Math.pow((1 + r / n), n * t);
       const annuityFactor = ((Math.pow(1 + r/n, n * t) - 1) / (r/n));
       const requiredMonthlyContribution = requiredTotal > 0 ? (requiredTotal / annuityFactor) / 12 : 0;
-      
+
       goalAnalysis = {
         timeToReachGoal: timeToGoal <= 50 ? timeToGoal : -1,
         requiredMonthlyContribution: Math.max(0, requiredMonthlyContribution),
@@ -157,7 +156,7 @@ export default function CompoundInterestCalculator() {
     if (enableSIP && totalSIPContributions > 0) {
       const sipInterestEarned = finalAmount - p - totalSIPContributions;
       const averageAnnualReturn = totalSIPContributions > 0 ? ((finalAmount / totalContributions) ** (1/t) - 1) * 100 : 0;
-      
+
       sipAnalysis = {
         totalSIPContributions,
         sipInterestEarned: Math.max(0, sipInterestEarned),
@@ -211,7 +210,7 @@ export default function CompoundInterestCalculator() {
     };
 
     const config = currencyMap[currency] || currencyMap.USD;
-    
+
     return new Intl.NumberFormat(config.locale, {
       style: 'currency',
       currency: config.currency,
@@ -226,9 +225,9 @@ export default function CompoundInterestCalculator() {
         <title>Compound Interest Calculator - Calculate Investment Growth | ToolsHub</title>
         <meta name="description" content="Free compound interest calculator to calculate investment growth over time. See how compound interest accelerates wealth building with detailed breakdowns, multiple currencies, and flexible compounding options for retirement planning and savings goals." />
       </Helmet>
-      
+
       <Header />
-      
+
       <main>
         {/* Hero Section */}
         <section className="gradient-hero text-white py-16 pt-24">
@@ -252,7 +251,7 @@ export default function CompoundInterestCalculator() {
                 {/* Input Section */}
                 <div className="space-y-6">
                   <h2 className="text-2xl font-semibold text-gray-900 mb-8">Investment Details</h2>
-                  
+
                   {/* Currency Selection */}
                   <div className="space-y-3">
                     <Label htmlFor="currency" className="text-sm font-medium text-gray-700">
@@ -371,7 +370,7 @@ export default function CompoundInterestCalculator() {
                 {/* Results Section */}
                 <div className="bg-gray-50 rounded-xl p-8">
                   <h2 className="text-2xl font-semibold text-gray-900 mb-8">Results</h2>
-                  
+
                   {result ? (
                     <div className="space-y-6">
                       {/* Final Amount */}
@@ -629,7 +628,7 @@ export default function CompoundInterestCalculator() {
             {/* Audience-Specific Benefits */}
             <section className="bg-white rounded-xl p-8 shadow-sm">
               <h2 className="text-3xl font-bold text-gray-900 mb-8">Who Benefits from Compound Interest Calculations?</h2>
-              
+
               {/* Students Section */}
               <div className="mb-10">
                 <h3 className="text-2xl font-semibold text-blue-600 mb-6">📚 Students & Young Adults</h3>
@@ -835,7 +834,7 @@ export default function CompoundInterestCalculator() {
                   <p className="text-gray-600 mb-4">Calculate growth in online savings accounts, CDs, and money market accounts with competitive interest rates.</p>
                   <div className="text-sm text-blue-600 font-medium">Typical rates: 4-5% APY</div>
                 </div>
-                
+
                 <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
                   <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
                     <span className="text-2xl">📈</span>
@@ -844,7 +843,7 @@ export default function CompoundInterestCalculator() {
                   <p className="text-gray-600 mb-4">Project long-term growth of index funds, ETFs, and dividend-paying stocks with historical return assumptions.</p>
                   <div className="text-sm text-green-600 font-medium">Historical average: 10% annually</div>
                 </div>
-                
+
                 <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
                   <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
                     <span className="text-2xl">🏠</span>
@@ -853,7 +852,7 @@ export default function CompoundInterestCalculator() {
                   <p className="text-gray-600 mb-4">Calculate returns on rental properties, REITs, and real estate crowdfunding with reinvested income.</p>
                   <div className="text-sm text-purple-600 font-medium">Typical returns: 6-8% annually</div>
                 </div>
-                
+
                 <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
                   <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
                     <span className="text-2xl">🎓</span>
@@ -862,7 +861,7 @@ export default function CompoundInterestCalculator() {
                   <p className="text-gray-600 mb-4">Plan for rising education costs with 529 plans, Coverdell ESAs, and education savings bonds.</p>
                   <div className="text-sm text-yellow-600 font-medium">College inflation: 5% annually</div>
                 </div>
-                
+
                 <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
                   <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
                     <span className="text-2xl">💳</span>
@@ -871,7 +870,7 @@ export default function CompoundInterestCalculator() {
                   <p className="text-gray-600 mb-4">Understand how compound interest works against you with credit card debt and personal loans.</p>
                   <div className="text-sm text-red-600 font-medium">Credit card APR: 18-29%</div>
                 </div>
-                
+
                 <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
                   <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
                     <span className="text-2xl">💰</span>
@@ -962,7 +961,7 @@ export default function CompoundInterestCalculator() {
             <section className="bg-white rounded-xl p-8 shadow-sm">
               <h2 className="text-3xl font-bold text-gray-900 mb-8">Related Financial Planning Tools</h2>
               <p className="text-gray-600 mb-8 text-lg">Maximize your financial planning with our comprehensive suite of calculators designed to work together for complete financial analysis.</p>
-              
+
               {/* Investment & Savings Tools */}
               <div className="mb-10">
                 <h3 className="text-xl font-semibold text-gray-900 mb-6">📊 Investment & Savings Calculators</h3>
@@ -975,7 +974,7 @@ export default function CompoundInterestCalculator() {
                     <p className="text-gray-600 text-sm mb-3">Calculate simple interest for loans and basic savings to compare with compound growth.</p>
                     <span className="text-blue-600 text-sm font-medium">Calculate Simple Interest →</span>
                   </a>
-                  
+
                   <a href="/tools/investment-return-calculator" className="block p-6 bg-green-50 rounded-lg border border-green-100 hover:border-green-200 transition-all hover:shadow-md">
                     <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center mb-3">
                       <span className="text-white text-sm font-bold">📈</span>
@@ -984,7 +983,7 @@ export default function CompoundInterestCalculator() {
                     <p className="text-gray-600 text-sm mb-3">Analyze portfolio returns, dividends, and capital gains with tax considerations.</p>
                     <span className="text-green-600 text-sm font-medium">Calculate Returns →</span>
                   </a>
-                  
+
                   <a href="/tools/sip-calculator" className="block p-6 bg-purple-50 rounded-lg border border-purple-100 hover:border-purple-200 transition-all hover:shadow-md">
                     <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center mb-3">
                       <span className="text-white text-sm font-bold">💰</span>
@@ -1008,7 +1007,7 @@ export default function CompoundInterestCalculator() {
                     <p className="text-gray-600 text-sm mb-3">Calculate monthly payments and total interest for personal, auto, and other loans.</p>
                     <span className="text-orange-600 text-sm font-medium">Calculate Loan →</span>
                   </a>
-                  
+
                   <a href="/tools/mortgage-calculator" className="block p-6 bg-red-50 rounded-lg border border-red-100 hover:border-red-200 transition-all hover:shadow-md">
                     <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center mb-3">
                       <span className="text-white text-sm font-bold">🏠</span>
@@ -1017,7 +1016,7 @@ export default function CompoundInterestCalculator() {
                     <p className="text-gray-600 text-sm mb-3">Calculate home loan payments, compare loan terms, and analyze amortization.</p>
                     <span className="text-red-600 text-sm font-medium">Calculate Mortgage →</span>
                   </a>
-                  
+
                   <a href="/tools/credit-card-interest-calculator" className="block p-6 bg-yellow-50 rounded-lg border border-yellow-100 hover:border-yellow-200 transition-all hover:shadow-md">
                     <div className="w-8 h-8 bg-yellow-600 rounded-lg flex items-center justify-center mb-3">
                       <span className="text-white text-sm font-bold">💳</span>
@@ -1041,7 +1040,7 @@ export default function CompoundInterestCalculator() {
                     <p className="text-gray-600 text-sm mb-3">Plan for retirement with 401(k), IRA, and pension contribution analysis.</p>
                     <span className="text-indigo-600 text-sm font-medium">Plan Retirement →</span>
                   </a>
-                  
+
                   <a href="/tools/savings-goal-calculator" className="block p-6 bg-teal-50 rounded-lg border border-teal-100 hover:border-teal-200 transition-all hover:shadow-md">
                     <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center mb-3">
                       <span className="text-white text-sm font-bold">📊</span>
@@ -1050,7 +1049,7 @@ export default function CompoundInterestCalculator() {
                     <p className="text-gray-600 text-sm mb-3">Calculate how much to save monthly to reach specific financial goals.</p>
                     <span className="text-teal-600 text-sm font-medium">Set Goals →</span>
                   </a>
-                  
+
                   <a href="/tools/inflation-calculator" className="block p-6 bg-pink-50 rounded-lg border border-pink-100 hover:border-pink-200 transition-all hover:shadow-md">
                     <div className="w-8 h-8 bg-pink-600 rounded-lg flex items-center justify-center mb-3">
                       <span className="text-white text-sm font-bold">📈</span>
@@ -1124,7 +1123,7 @@ export default function CompoundInterestCalculator() {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

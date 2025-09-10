@@ -4,7 +4,7 @@ import HeroSection from '@/components/HeroSection';
 import PopularToolsSection from '@/components/PopularToolsSection';
 import CategorySection from '@/components/CategorySection';
 import Footer from '@/components/Footer';
-import FavoritesSection from '@/components/FavoritesSection';
+import { FavoritesSection } from '../components/FavoritesSection';
 
 const Home = () => {
   return (
@@ -35,15 +35,15 @@ const Home = () => {
           })}
         </script>
       </Helmet>
-      
+
       <div className="min-h-screen flex flex-col" data-testid="page-home">
         <Header />
         <main className="flex-1">
           <HeroSection />
-          
+
           {/* User-specific sections - shown if user has favorites */}
           <FavoritesSection />
-          
+
           {/* What is DapsiWow Section */}
           <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,7 +64,7 @@ const Home = () => {
                     <h3 className="text-lg font-semibold text-neutral-800 mb-2">Finance Tools</h3>
                     <p className="text-neutral-600 text-sm">Calculators for loans, mortgages, investments, taxes, and more financial planning needs</p>
                   </div>
-                  
+
                   <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
                     <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
                       <i className="fas fa-file-pdf text-red-600 text-xl"></i>
@@ -72,8 +72,8 @@ const Home = () => {
                     <h3 className="text-lg font-semibold text-neutral-800 mb-2">PDF Tools</h3>
                     <p className="text-neutral-600 text-sm">Convert, merge, split, compress, and edit PDF files with professional results</p>
                   </div>
-                  
-                  
+
+
                   <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
                     <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
                       <i className="fas fa-font text-purple-600 text-xl"></i>
@@ -81,8 +81,8 @@ const Home = () => {
                     <h3 className="text-lg font-semibold text-neutral-800 mb-2">Text Tools</h3>
                     <p className="text-neutral-600 text-sm">Word counters, case converters, grammar checkers, and content generation tools</p>
                   </div>
-                  
-                  
+
+
                   <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
                     <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
                       <i className="fas fa-heartbeat text-pink-600 text-xl"></i>
@@ -97,7 +97,7 @@ const Home = () => {
 
           <PopularToolsSection />
           <CategorySection />
-          
+
           {/* About DapsiWow Section */}
           <section className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -111,7 +111,7 @@ const Home = () => {
                   tools that rival expensive software suites.
                 </p>
               </div>
-              
+
               <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
                 <div>
                   <h3 className="text-3xl font-bold text-neutral-800 mb-6">
@@ -147,7 +147,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div className="text-center">
                   <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
@@ -159,7 +159,7 @@ const Home = () => {
                     installations, or lengthy processing times. Built with modern web technologies for optimal performance.
                   </p>
                 </div>
-                
+
                 <div className="text-center">
                   <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                     <i className="fas fa-shield-alt text-white text-2xl"></i>
@@ -170,7 +170,7 @@ const Home = () => {
                     in your browser or on protected servers with enterprise-grade security measures.
                   </p>
                 </div>
-                
+
                 <div className="text-center">
                   <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                     <i className="fas fa-mobile-alt text-white text-2xl"></i>
@@ -181,7 +181,7 @@ const Home = () => {
                     perfect functionality across all screen sizes and browsers.
                   </p>
                 </div>
-                
+
                 <div className="text-center">
                   <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                     <i className="fas fa-globe text-white text-2xl"></i>
@@ -207,7 +207,7 @@ const Home = () => {
                   Discover our most popular and powerful tools that thousands of users rely on daily
                 </p>
               </div>
-              
+
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mb-6">
@@ -228,7 +228,7 @@ const Home = () => {
                     Try Business Loan Calculator →
                   </a>
                 </div>
-                
+
                 <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl flex items-center justify-center mb-6">
                     <i className="fas fa-file-contract text-white text-xl"></i>
@@ -248,7 +248,7 @@ const Home = () => {
                     Try Lease Calculator →
                   </a>
                 </div>
-                
+
                 <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mb-6">
                     <i className="fas fa-home text-white text-xl"></i>
@@ -283,7 +283,7 @@ const Home = () => {
                   Getting started is simple. No complicated setup, no subscriptions, no hidden fees.
                 </p>
               </div>
-              
+
               <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
                 <div className="text-center">
                   <div className="relative">
@@ -297,7 +297,7 @@ const Home = () => {
                     From financial calculators to text analyzers, we have tools for every task.
                   </p>
                 </div>
-                
+
                 <div className="text-center">
                   <div className="relative">
                     <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -310,7 +310,7 @@ const Home = () => {
                     with clear instructions and helpful tooltips.
                   </p>
                 </div>
-                
+
                 <div className="text-center">
                   <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
                     <span className="text-2xl font-bold text-white">3</span>
@@ -336,7 +336,7 @@ const Home = () => {
                   Join thousands of professionals, students, and individuals who rely on ToolForge for their daily tasks
                 </p>
               </div>
-              
+
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center mb-16">
                 <div className="bg-white rounded-lg p-6 shadow-md">
                   <div className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">1M+</div>
@@ -359,7 +359,7 @@ const Home = () => {
                   <div className="text-xs text-neutral-500 mt-1">Start immediately</div>
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-2xl p-8 lg:p-12 shadow-xl">
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                   <div>
@@ -376,7 +376,7 @@ const Home = () => {
                           <p className="text-neutral-600 text-sm">Financial calculations, document processing, and business analysis tools</p>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-start space-x-4">
                         <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
                           <i className="fas fa-graduation-cap text-green-600 text-sm"></i>
@@ -386,7 +386,7 @@ const Home = () => {
                           <p className="text-neutral-600 text-sm">Academic calculations, document editing, and research assistance tools</p>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-start space-x-4">
                         <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
                           <i className="fas fa-users text-purple-600 text-sm"></i>
@@ -396,7 +396,7 @@ const Home = () => {
                           <p className="text-neutral-600 text-sm">Everyday calculations, file conversions, and productivity enhancements</p>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-start space-x-4">
                         <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
                           <i className="fas fa-code text-orange-600 text-sm"></i>
@@ -408,7 +408,7 @@ const Home = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="text-center">
                     <div className="bg-[#eff3ff] rounded-2xl p-8 text-gray-800 shadow-inner">
                       <h4 className="text-2xl font-bold mb-4">Ready to Get Started?</h4>
@@ -443,7 +443,7 @@ const Home = () => {
                   Everything you need to know about DapsiWow and our free online tools
                 </p>
               </div>
-              
+
               <div className="grid lg:grid-cols-2 gap-8">
                 <div className="space-y-8">
                   <div className="bg-white rounded-lg p-6 shadow-md">
@@ -456,7 +456,7 @@ const Home = () => {
                       to professional-grade tools without financial barriers.
                     </p>
                   </div>
-                  
+
                   <div className="bg-white rounded-lg p-6 shadow-md">
                     <h3 className="text-lg font-semibold text-neutral-800 mb-3">
                       Do I need to create an account or register?
@@ -467,7 +467,7 @@ const Home = () => {
                       Just bookmark our site and return whenever you need our tools.
                     </p>
                   </div>
-                  
+
                   <div className="bg-white rounded-lg p-6 shadow-md">
                     <h3 className="text-lg font-semibold text-neutral-800 mb-3">
                       Are my files and data secure?
@@ -478,7 +478,7 @@ const Home = () => {
                       files are processed securely and deleted immediately after use.
                     </p>
                   </div>
-                  
+
                   <div className="bg-white rounded-lg p-6 shadow-md">
                     <h3 className="text-lg font-semibold text-neutral-800 mb-3">
                       Can I use these tools on my mobile device?
@@ -490,7 +490,7 @@ const Home = () => {
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="space-y-8">
                   <div className="bg-white rounded-lg p-6 shadow-md">
                     <h3 className="text-lg font-semibold text-neutral-800 mb-3">
@@ -502,7 +502,7 @@ const Home = () => {
                       SEO (analysis, optimization), and Health (BMI, calorie calculators). New tools are added regularly.
                     </p>
                   </div>
-                  
+
                   <div className="bg-white rounded-lg p-6 shadow-md">
                     <h3 className="text-lg font-semibold text-neutral-800 mb-3">
                       How accurate are the financial calculators?
@@ -513,7 +513,7 @@ const Home = () => {
                       consulting with qualified financial professionals who can consider your specific circumstances.
                     </p>
                   </div>
-                  
+
                   <div className="bg-white rounded-lg p-6 shadow-md">
                     <h3 className="text-lg font-semibold text-neutral-800 mb-3">
                       Do you support multiple currencies and formats?
@@ -524,7 +524,7 @@ const Home = () => {
                       calculators support various regional formats.
                     </p>
                   </div>
-                  
+
                   <div className="bg-white rounded-lg p-6 shadow-md">
                     <h3 className="text-lg font-semibold text-neutral-800 mb-3">
                       How can I get help or report issues?

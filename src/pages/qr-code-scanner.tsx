@@ -1,4 +1,3 @@
-
 import { useState, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
@@ -101,13 +100,13 @@ const QRCodeScanner = () => {
     try {
       // Scan QR code from uploaded image
       const result = await QrScanner.scanImage(file);
-      
+
       if (result) {
         setScannedText(result);
-        
+
         // Extract content from scanned text
         const extractedContent = extractTextContent(result);
-        
+
         const scannedQR: ScannedQR = {
           scannedText: result,
           extractedContent: extractedContent.length > 0 ? extractedContent : [result],
@@ -162,9 +161,9 @@ const QRCodeScanner = () => {
         <meta property="og:type" content="website" />
         <link rel="canonical" href="/tools/qr-code-scanner" />
       </Helmet>
-      
+
       <Header />
-      
+
       <main>
         {/* Hero Section */}
         <section className="gradient-hero text-white py-16 pt-24">
@@ -189,7 +188,7 @@ const QRCodeScanner = () => {
                 <div className="space-y-8">
                   <div>
                     <h2 className="text-2xl font-semibold text-gray-900 mb-6">Upload QR Code Image</h2>
-                    
+
                     {/* Extraction Options */}
                     <div className="mb-6 space-y-4">
                       <h3 className="text-lg font-semibold text-gray-900">Text Processing Options</h3>
@@ -243,7 +242,7 @@ const QRCodeScanner = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* File Upload Area */}
                     <div className="space-y-4">
                       <Label className="text-sm font-medium text-gray-700">
@@ -280,7 +279,7 @@ const QRCodeScanner = () => {
                             </div>
                           </div>
                         )}
-                        
+
                         <input
                           ref={fileInputRef}
                           type="file"
@@ -289,7 +288,7 @@ const QRCodeScanner = () => {
                           className="hidden"
                           data-testid="file-input"
                         />
-                        
+
                         <Button
                           onClick={() => fileInputRef.current?.click()}
                           variant="outline"
@@ -330,7 +329,7 @@ const QRCodeScanner = () => {
                     {scannedText && (
                       <div className="space-y-6 mt-8" data-testid="scanned-results">
                         <h3 className="text-xl font-semibold text-gray-900">Scanned QR Code Content</h3>
-                        
+
                         <div className="bg-gray-50 rounded-lg p-4">
                           <div className="space-y-3">
                             <div className="flex items-center justify-between">
@@ -432,7 +431,7 @@ const QRCodeScanner = () => {
               <p className="text-lg text-gray-700 mb-6">
                 <strong>QR Code Scanner</strong> is a powerful tool that reads QR codes from uploaded images and extracts their text content. It can automatically identify and separate URLs, email addresses, and other formatted text from the scanned data.
               </p>
-              
+
               <p className="text-gray-700 mb-6">
                 Simply upload an image containing a QR code, and the scanner will decode it and present the content in an organized, readable format with options to copy individual components.
               </p>
@@ -451,7 +450,7 @@ const QRCodeScanner = () => {
                   </h3>
                   <p className="text-gray-600 text-sm">Supports JPG, PNG, GIF, and WebP image formats</p>
                 </div>
-                
+
                 <div className="p-4 bg-white rounded-lg shadow-sm">
                   <h3 className="font-semibold text-gray-900 mb-2">
                     <i className="fas fa-search mr-2 text-green-600"></i>
@@ -460,7 +459,7 @@ const QRCodeScanner = () => {
                   <p className="text-gray-600 text-sm">Automatically identifies URLs and email addresses</p>
                 </div>
               </div>
-              
+
               <div className="space-y-4">
                 <div className="p-4 bg-white rounded-lg shadow-sm">
                   <h3 className="font-semibold text-gray-900 mb-2">
@@ -469,7 +468,7 @@ const QRCodeScanner = () => {
                   </h3>
                   <p className="text-gray-600 text-sm">Keep track of recently scanned QR codes</p>
                 </div>
-                
+
                 <div className="p-4 bg-white rounded-lg shadow-sm">
                   <h3 className="font-semibold text-gray-900 mb-2">
                     <i className="fas fa-copy mr-2 text-orange-600"></i>
@@ -482,7 +481,7 @@ const QRCodeScanner = () => {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

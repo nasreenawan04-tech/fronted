@@ -4,7 +4,7 @@ export interface Tool {
   description: string;
   category: 'finance' | 'pdf' | 'text' | 'health';
   icon: string;
-  isPopular?: boolean;
+  isPopular: boolean;
   href: string;
 }
 

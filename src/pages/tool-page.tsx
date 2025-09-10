@@ -3,7 +3,7 @@ import { useLocation } from 'wouter';
 import { tools } from '@/data/tools';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Link from 'wouter-link'; // Assuming wouter-link is used for navigation
+import { Link } from 'wouter'; // Assuming wouter-link is used for navigation
 
 // Define a type for the tool object for better type safety
 interface Tool {
@@ -31,7 +31,8 @@ const ToolPage = () => {
   useEffect(() => {
     if (toolId) {
       const foundTool = tools.find(t => t.id === toolId);
-      setCurrentTool(foundTool || null); // Ensure null is assigned if not found
+      // Fix tool type compatibility by ensuring isPopular has a default value
+      setCurrentTool(foundTool ? { ...foundTool, isPopular: foundTool.isPopular || false } : null);
     }
   }, [toolId]);
 

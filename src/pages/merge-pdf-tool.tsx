@@ -48,7 +48,7 @@ const MergePDFTool = () => {
     if (!files) return;
 
     const newFiles: PDFFile[] = [];
-    
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (file.type === 'application/pdf') {
@@ -105,7 +105,7 @@ const MergePDFTool = () => {
     if (pdfFiles.length < 2) return;
 
     setIsProcessing(true);
-    
+
     try {
       const mergedPdf = await PDFDocument.create();
 
@@ -113,7 +113,9 @@ const MergePDFTool = () => {
         const arrayBuffer = await pdfFile.file.arrayBuffer();
         const pdf = await PDFDocument.load(arrayBuffer);
         const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-        pages.forEach((page) => mergedPdf.addPage(page));
+        pages.forEach((page: any) => {
+          mergedPdf.addPage(page);
+        });
       }
 
       const pdfBytes = await mergedPdf.save();
@@ -161,7 +163,7 @@ const MergePDFTool = () => {
 
       <div className="min-h-screen flex flex-col" data-testid="page-merge-pdf">
         <Header />
-        
+
         <main className="flex-1 bg-neutral-50">
           {/* Hero Section */}
           <section className="bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-700 text-white py-16">
@@ -187,7 +189,7 @@ const MergePDFTool = () => {
                     {/* File Upload Section */}
                     <div>
                       <h2 className="text-2xl font-semibold text-gray-900 mb-6">Select PDF Files to Merge</h2>
-                      
+
                       <div
                         className={`border-2 border-dashed rounded-xl p-12 text-center transition-colors cursor-pointer ${
                           dragOver 
@@ -212,7 +214,7 @@ const MergePDFTool = () => {
                         >
                           Select PDF Files
                         </Button>
-                        
+
                         <input
                           ref={fileInputRef}
                           type="file"
@@ -240,7 +242,7 @@ const MergePDFTool = () => {
                             Clear All
                           </Button>
                         </div>
-                        
+
                         <div className="space-y-3" data-testid="file-list">
                           {pdfFiles.map((file, index) => (
                             <div
@@ -267,17 +269,17 @@ const MergePDFTool = () => {
                                   ↓
                                 </Button>
                               </div>
-                              
+
                               <GripVertical className="w-5 h-5 text-gray-400" />
                               <FileText className="w-6 h-6 text-red-600" />
-                              
+
                               <div className="flex-1">
                                 <div className="font-medium text-gray-900">{file.name}</div>
                                 <div className="text-sm text-gray-600">
                                   {file.size} • {file.pages} pages
                                 </div>
                               </div>
-                              
+
                               <Button
                                 onClick={() => removeFile(file.id)}
                                 variant="ghost"
@@ -355,7 +357,7 @@ const MergePDFTool = () => {
                       Drag and drop your PDF files or click to select them from your device.
                     </p>
                   </div>
-                  
+
                   <div className="text-center">
                     <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                       <GripVertical className="w-6 h-6 text-green-600" />
@@ -365,7 +367,7 @@ const MergePDFTool = () => {
                       Use the arrow buttons to arrange your PDF files in the desired order.
                     </p>
                   </div>
-                  
+
                   <div className="text-center">
                     <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                       <Download className="w-6 h-6 text-purple-600" />
@@ -380,7 +382,7 @@ const MergePDFTool = () => {
             </div>
           </section>
         </main>
-        
+
         <Footer />
       </div>
     </>

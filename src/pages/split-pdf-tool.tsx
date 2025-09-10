@@ -53,7 +53,7 @@ const SplitPDFTool = () => {
     }
 
     setPdfFile(file);
-    
+
     try {
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await PDFDocument.load(arrayBuffer);
@@ -86,14 +86,14 @@ const SplitPDFTool = () => {
   const addPageRange = () => {
     const start = parseInt(newRangeStart);
     const end = parseInt(newRangeEnd);
-    
+
     if (isNaN(start) || isNaN(end) || start < 1 || end > totalPages || start > end) {
       alert(`Please enter valid page numbers between 1 and ${totalPages}`);
       return;
     }
 
     const name = newRangeName.trim() || `Pages ${start}-${end}`;
-    
+
     setPageRanges(prev => [...prev, { start, end, name }]);
     setNewRangeStart('');
     setNewRangeEnd('');
@@ -120,11 +120,11 @@ const SplitPDFTool = () => {
           const newPdf = await PDFDocument.create();
           const [copiedPage] = await newPdf.copyPages(originalPdf, [i]);
           newPdf.addPage(copiedPage);
-          
+
           const pdfBytes = await newPdf.save();
           const blob = new Blob([pdfBytes], { type: 'application/pdf' });
           const url = URL.createObjectURL(blob);
-          
+
           results.push({
             filename: `page-${i + 1}.pdf`,
             url,
@@ -136,18 +136,18 @@ const SplitPDFTool = () => {
         for (const range of pageRanges) {
           const newPdf = await PDFDocument.create();
           const pageIndices = [];
-          
+
           for (let i = range.start - 1; i < range.end; i++) {
             pageIndices.push(i);
           }
-          
+
           const copiedPages = await newPdf.copyPages(originalPdf, pageIndices);
           copiedPages.forEach(page => newPdf.addPage(page));
-          
+
           const pdfBytes = await newPdf.save();
           const blob = new Blob([pdfBytes], { type: 'application/pdf' });
           const url = URL.createObjectURL(blob);
-          
+
           results.push({
             filename: `${range.name.toLowerCase().replace(/\s+/g, '-')}.pdf`,
             url,
@@ -190,7 +190,7 @@ const SplitPDFTool = () => {
     setNewRangeStart('');
     setNewRangeEnd('');
     setNewRangeName('');
-    
+
     // Clean up object URLs
     splitResults.forEach(result => {
       URL.revokeObjectURL(result.url);
@@ -211,7 +211,7 @@ const SplitPDFTool = () => {
 
       <div className="min-h-screen flex flex-col" data-testid="page-split-pdf">
         <Header />
-        
+
         <main className="flex-1 bg-neutral-50">
           {/* Hero Section */}
           <section className="bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-700 text-white py-16">
@@ -237,7 +237,7 @@ const SplitPDFTool = () => {
                     {/* File Upload Section */}
                     <div>
                       <h2 className="text-2xl font-semibold text-gray-900 mb-6">Upload PDF File to Split</h2>
-                      
+
                       <div
                         className={`border-2 border-dashed rounded-xl p-12 text-center transition-colors ${
                           dragOver 
@@ -262,7 +262,7 @@ const SplitPDFTool = () => {
                         >
                           Select PDF File
                         </Button>
-                        
+
                         <input
                           ref={fileInputRef}
                           type="file"
@@ -300,7 +300,7 @@ const SplitPDFTool = () => {
                     {pdfFile && totalPages > 0 && (
                       <div>
                         <h3 className="text-lg font-medium text-gray-900 mb-4">Split Options</h3>
-                        
+
                         <RadioGroup 
                           value={splitMode} 
                           onValueChange={(value: 'individual' | 'ranges') => setSplitMode(value)}
@@ -312,7 +312,7 @@ const SplitPDFTool = () => {
                               Split into individual pages ({totalPages} files)
                             </Label>
                           </div>
-                          
+
                           <div className="flex items-center space-x-2">
                             <RadioGroupItem value="ranges" id="ranges" data-testid="radio-ranges" />
                             <Label htmlFor="ranges" className="font-medium">
@@ -328,7 +328,7 @@ const SplitPDFTool = () => {
                       <div className="space-y-6">
                         <div className="bg-blue-50 rounded-lg p-4">
                           <h4 className="font-medium text-gray-900 mb-4">Add Page Range</h4>
-                          
+
                           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                             <div>
                               <Label htmlFor="range-start" className="text-sm">Start Page</Label>
@@ -344,7 +344,7 @@ const SplitPDFTool = () => {
                                 data-testid="input-range-start"
                               />
                             </div>
-                            
+
                             <div>
                               <Label htmlFor="range-end" className="text-sm">End Page</Label>
                               <Input
@@ -359,7 +359,7 @@ const SplitPDFTool = () => {
                                 data-testid="input-range-end"
                               />
                             </div>
-                            
+
                             <div>
                               <Label htmlFor="range-name" className="text-sm">Name (optional)</Label>
                               <Input
@@ -372,7 +372,7 @@ const SplitPDFTool = () => {
                                 data-testid="input-range-name"
                               />
                             </div>
-                            
+
                             <div className="flex items-end">
                               <Button
                                 onClick={addPageRange}
@@ -451,7 +451,7 @@ const SplitPDFTool = () => {
                           <p className="text-gray-600 mb-4">
                             Your PDF has been split into {splitResults.length} files.
                           </p>
-                          
+
                           {splitResults.length > 1 && (
                             <Button
                               onClick={downloadAllFiles}
@@ -502,7 +502,7 @@ const SplitPDFTool = () => {
                     <p className="mb-6 text-lg">
                       <strong>PDF splitting</strong> is a powerful document management technique that allows you to divide a single PDF file into multiple separate documents. Our advanced PDF splitter tool processes your documents entirely in your browser, ensuring complete privacy and security while delivering professional results.
                     </p>
-                    
+
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                       <div className="bg-white rounded-xl p-6 shadow-sm">
                         <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
@@ -528,7 +528,7 @@ const SplitPDFTool = () => {
                           </li>
                         </ul>
                       </div>
-                      
+
                       <div className="bg-white rounded-xl p-6 shadow-sm">
                         <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
                           <i className="fas fa-shield-alt text-green-600 mr-3"></i>
@@ -588,7 +588,7 @@ const SplitPDFTool = () => {
                         Drag and drop your PDF file or click to select it from your computer.
                       </p>
                     </div>
-                    
+
                     <div className="text-center">
                       <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <Scissors className="w-8 h-8 text-blue-600" />
@@ -598,7 +598,7 @@ const SplitPDFTool = () => {
                         Split into individual pages or define custom page ranges.
                       </p>
                     </div>
-                    
+
                     <div className="text-center">
                       <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <Download className="w-8 h-8 text-green-600" />
@@ -618,7 +618,7 @@ const SplitPDFTool = () => {
                     <p className="mb-6 text-lg">
                       Discover how PDF splitting transforms your document workflow. From improved organization to enhanced security, splitting PDFs offers numerous advantages for individuals and businesses alike.
                     </p>
-                    
+
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                       <div className="bg-white rounded-xl p-6 shadow-sm border border-emerald-200">
                         <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
@@ -632,7 +632,7 @@ const SplitPDFTool = () => {
                           <li>• Streamlined workflow processes</li>
                         </ul>
                       </div>
-                      
+
                       <div className="bg-white rounded-xl p-6 shadow-sm border border-blue-200">
                         <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
                           <i className="fas fa-share-alt text-blue-600 text-xl"></i>
@@ -645,7 +645,7 @@ const SplitPDFTool = () => {
                           <li>• Better collaboration efficiency</li>
                         </ul>
                       </div>
-                      
+
                       <div className="bg-white rounded-xl p-6 shadow-sm border border-purple-200">
                         <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
                           <i className="fas fa-lock text-purple-600 text-xl"></i>
@@ -675,7 +675,7 @@ const SplitPDFTool = () => {
                   <p className="text-gray-600 mb-8 text-lg">
                     Discover how different professionals leverage PDF splitting to streamline their workflows and boost productivity.
                   </p>
-                  
+
                   <div className="space-y-8">
                     {/* Students & Educators */}
                     <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6">
@@ -830,7 +830,7 @@ const SplitPDFTool = () => {
                 {/* Professional Use Cases */}
                 <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl shadow-lg p-8">
                   <h2 className="text-3xl font-bold text-gray-900 mb-6">Professional Use Cases for PDF Splitting</h2>
-                  
+
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div>
                       <h3 className="text-xl font-semibold text-gray-900 mb-4">🏢 Business Applications</h3>
@@ -853,7 +853,7 @@ const SplitPDFTool = () => {
                         </li>
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h3 className="text-xl font-semibold text-gray-900 mb-4">🎓 Educational Applications</h3>
                       <ul className="space-y-3 text-gray-700">
@@ -876,7 +876,7 @@ const SplitPDFTool = () => {
                       </ul>
                     </div>
                   </div>
-                  
+
                   <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div>
                       <h3 className="text-xl font-semibold text-gray-900 mb-4">⚖️ Legal Applications</h3>
@@ -895,7 +895,7 @@ const SplitPDFTool = () => {
                         </li>
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h3 className="text-xl font-semibold text-gray-900 mb-4">🏥 Healthcare Applications</h3>
                       <ul className="space-y-3 text-gray-700">
@@ -929,7 +929,7 @@ const SplitPDFTool = () => {
                         Extract each page as a separate PDF file with automatic naming. Perfect for creating individual documents from multi-page files.
                       </p>
                     </div>
-                    
+
                     <div className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
                       <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
                         <i className="fas fa-layer-group text-blue-600 text-xl"></i>
@@ -939,7 +939,7 @@ const SplitPDFTool = () => {
                         Define specific page ranges with custom names. Create chapters, sections, or any logical groupings that suit your needs.
                       </p>
                     </div>
-                    
+
                     <div className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
                       <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
                         <i className="fas fa-shield-alt text-green-600 text-xl"></i>
@@ -949,7 +949,7 @@ const SplitPDFTool = () => {
                         All PDF splitting happens locally in your browser. Your files never leave your device, ensuring complete privacy and security.
                       </p>
                     </div>
-                    
+
                     <div className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
                       <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
                         <i className="fas fa-download text-orange-600 text-xl"></i>
@@ -959,7 +959,7 @@ const SplitPDFTool = () => {
                         Download all split files at once or select individual files. Streamlined process for handling multiple extracted documents.
                       </p>
                     </div>
-                    
+
                     <div className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
                       <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-4">
                         <i className="fas fa-bolt text-red-600 text-xl"></i>
@@ -969,7 +969,7 @@ const SplitPDFTool = () => {
                         Quick and efficient PDF splitting powered by modern web technologies. Process large documents in seconds without quality loss.
                       </p>
                     </div>
-                    
+
                     <div className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
                       <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-4">
                         <i className="fas fa-mobile-alt text-indigo-600 text-xl"></i>
@@ -995,7 +995,7 @@ const SplitPDFTool = () => {
                         Split ebooks, manuals, and guides into individual chapters for easier reading and reference. Perfect for study materials and research.
                       </p>
                     </div>
-                    
+
                     <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6">
                       <div className="w-12 h-12 bg-blue-200 rounded-xl flex items-center justify-center mb-4">
                         <i className="fas fa-chart-bar text-blue-700 text-xl"></i>
@@ -1005,7 +1005,7 @@ const SplitPDFTool = () => {
                         Extract specific sections from large business reports, financial statements, and analytical documents for targeted sharing.
                       </p>
                     </div>
-                    
+
                     <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6">
                       <div className="w-12 h-12 bg-green-200 rounded-xl flex items-center justify-center mb-4">
                         <i className="fas fa-share-alt text-green-700 text-xl"></i>
@@ -1015,7 +1015,7 @@ const SplitPDFTool = () => {
                         Share only relevant pages from contracts, presentations, or documentation without exposing unnecessary information.
                       </p>
                     </div>
-                    
+
                     <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6">
                       <div className="w-12 h-12 bg-orange-200 rounded-xl flex items-center justify-center mb-4">
                         <i className="fas fa-graduation-cap text-orange-700 text-xl"></i>
@@ -1025,7 +1025,7 @@ const SplitPDFTool = () => {
                         Split textbooks and academic materials into manageable study sections. Create focused materials for exam preparation.
                       </p>
                     </div>
-                    
+
                     <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6">
                       <div className="w-12 h-12 bg-red-200 rounded-xl flex items-center justify-center mb-4">
                         <i className="fas fa-briefcase text-red-700 text-xl"></i>
@@ -1035,7 +1035,7 @@ const SplitPDFTool = () => {
                         Extract invoices, contracts, and forms from bundled business documents for organized filing and processing.
                       </p>
                     </div>
-                    
+
                     <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6">
                       <div className="w-12 h-12 bg-gray-200 rounded-xl flex items-center justify-center mb-4">
                         <i className="fas fa-mobile-alt text-gray-700 text-xl"></i>
@@ -1069,7 +1069,7 @@ const SplitPDFTool = () => {
                         </li>
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h3 className="text-xl font-semibold text-gray-900 mb-4">📁 File Management</h3>
                       <ul className="space-y-3 text-gray-700">
@@ -1100,28 +1100,28 @@ const SplitPDFTool = () => {
                         Yes, completely safe. Our PDF splitter processes files entirely in your browser using client-side technology. Your files never leave your device or get uploaded to any server, ensuring complete privacy and security.
                       </p>
                     </div>
-                    
+
                     <div className="border-l-4 border-blue-500 pl-6">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">What's the maximum file size I can split?</h3>
                       <p className="text-gray-600">
                         The tool can handle large PDF files, but performance depends on your device's memory and processing power. For optimal performance, we recommend files under 50MB, though larger files may work depending on your system capabilities.
                       </p>
                     </div>
-                    
+
                     <div className="border-l-4 border-green-500 pl-6">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Will the quality of split PDFs be affected?</h3>
                       <p className="text-gray-600">
                         No, splitting preserves the original quality completely. The tool creates exact copies of the selected pages without any compression or quality loss, maintaining all text, images, and formatting.
                       </p>
                     </div>
-                    
+
                     <div className="border-l-4 border-orange-500 pl-6">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I split password-protected PDFs?</h3>
                       <p className="text-gray-600">
                         You'll need to remove the password protection first using our PDF unlock tool. Once unlocked, you can split the PDF normally. This ensures security while allowing necessary document processing.
                       </p>
                     </div>
-                    
+
                     <div className="border-l-4 border-red-500 pl-6">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">How many files can I create from one PDF?</h3>
                       <p className="text-gray-600">
@@ -1137,7 +1137,7 @@ const SplitPDFTool = () => {
                   <p className="text-gray-600 mb-8 text-lg">
                     Transform your document management with our comprehensive PDF toolkit. Combine splitting with other powerful tools for professional-grade document processing.
                   </p>
-                  
+
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                     {/* Before Splitting */}
                     <div className="bg-white rounded-xl p-6 shadow-sm border border-blue-200">
@@ -1155,7 +1155,7 @@ const SplitPDFTool = () => {
                             <p className="text-sm text-gray-600">Reorder pages before splitting with our <a href="/tools/organize-pdf" className="text-purple-600 hover:text-purple-700 font-medium">page organizer</a></p>
                           </div>
                         </div>
-                        
+
                         <div className="flex items-start">
                           <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center mr-3 mt-1">
                             <i className="fas fa-undo text-orange-600 text-sm"></i>
@@ -1165,7 +1165,7 @@ const SplitPDFTool = () => {
                             <p className="text-sm text-gray-600">Fix page rotation with our <a href="/tools/rotate-pdf" className="text-orange-600 hover:text-orange-700 font-medium">PDF rotator</a></p>
                           </div>
                         </div>
-                        
+
                         <div className="flex items-start">
                           <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center mr-3 mt-1">
                             <i className="fas fa-unlock text-red-600 text-sm"></i>
@@ -1177,7 +1177,7 @@ const SplitPDFTool = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* After Splitting */}
                     <div className="bg-white rounded-xl p-6 shadow-sm border border-green-200">
                       <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
@@ -1194,7 +1194,7 @@ const SplitPDFTool = () => {
                             <p className="text-sm text-gray-600">Recombine specific splits with our <a href="/tools/merge-pdf" className="text-blue-600 hover:text-blue-700 font-medium">PDF merger</a></p>
                           </div>
                         </div>
-                        
+
                         <div className="flex items-start">
                           <div className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center mr-3 mt-1">
                             <i className="fas fa-tint text-indigo-600 text-sm"></i>
@@ -1204,7 +1204,7 @@ const SplitPDFTool = () => {
                             <p className="text-sm text-gray-600">Brand your split documents with our <a href="/tools/watermark-pdf" className="text-indigo-600 hover:text-indigo-700 font-medium">watermarking tool</a></p>
                           </div>
                         </div>
-                        
+
                         <div className="flex items-start">
                           <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3 mt-1">
                             <i className="fas fa-lock text-green-600 text-sm"></i>
@@ -1230,7 +1230,7 @@ const SplitPDFTool = () => {
                         Try Tool →
                       </a>
                     </div>
-                    
+
                     <div className="bg-white rounded-lg p-4 hover:shadow-md transition-shadow border border-gray-200">
                       <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center mb-3">
                         <i className="fas fa-compress-alt text-emerald-600"></i>
@@ -1241,7 +1241,7 @@ const SplitPDFTool = () => {
                         Try Tool →
                       </a>
                     </div>
-                    
+
                     <div className="bg-white rounded-lg p-4 hover:shadow-md transition-shadow border border-gray-200">
                       <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mb-3">
                         <i className="fas fa-file-export text-yellow-600"></i>
@@ -1252,7 +1252,7 @@ const SplitPDFTool = () => {
                         Try Tool →
                       </a>
                     </div>
-                    
+
                     <div className="bg-white rounded-lg p-4 hover:shadow-md transition-shadow border border-gray-200">
                       <div className="w-10 h-10 bg-rose-100 rounded-lg flex items-center justify-center mb-3">
                         <i className="fas fa-images text-rose-600"></i>
@@ -1264,7 +1264,7 @@ const SplitPDFTool = () => {
                       </a>
                     </div>
                   </div>
-                  
+
                   <div className="mt-6 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg p-4">
                     <p className="text-center text-gray-700">
                       <strong>Explore All PDF Tools:</strong> Visit our complete <a href="/tools/pdf-tools" className="text-blue-600 hover:text-blue-700 font-medium">PDF tools collection</a> for advanced document management capabilities.
@@ -1275,7 +1275,7 @@ const SplitPDFTool = () => {
             </div>
           </section>
         </main>
-        
+
         <Footer />
       </div>
     </>
