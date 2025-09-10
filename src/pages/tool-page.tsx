@@ -1,26 +1,42 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
 import { tools } from '@/data/tools';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Link from 'wouter-link'; // Assuming wouter-link is used for navigation
+
+// Define a type for the tool object for better type safety
+interface Tool {
+  id: string;
+  name: string;
+  description: string;
+  icon: string; // Assuming icon is a string representing a class name (e.g., 'fas fa-bolt')
+  isPopular: boolean;
+  category: string;
+}
 
 const ToolPage = () => {
   const [location] = useLocation();
-  const [tool, setTool] = useState(null);
+  const [toolId, setToolId] = useState<string | null>(null); // State to hold the extracted tool ID
+  const [currentTool, setCurrentTool] = useState<Tool | null>(null);
 
   useEffect(() => {
     // Extract tool ID from URL path like /tools/loan-calculator
     const pathParts = location.split('/');
-    const toolId = pathParts[2]; // tools/[toolId]
-    
-    if (toolId) {
-      const foundTool = tools.find(t => t.id === toolId);
-      setTool(foundTool);
+    if (pathParts.length > 2 && pathParts[1] === 'tools') {
+      setToolId(pathParts[2]);
     }
   }, [location]);
 
-  if (!tool) {
+  useEffect(() => {
+    if (toolId) {
+      const foundTool = tools.find(t => t.id === toolId);
+      setCurrentTool(foundTool || null); // Ensure null is assigned if not found
+    }
+  }, [toolId]);
+
+
+  if (!currentTool) {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
@@ -28,7 +44,7 @@ const ToolPage = () => {
           <div className="text-center">
             <h1 className="text-3xl font-bold text-neutral-800 mb-4">Tool Not Found</h1>
             <p className="text-neutral-600 mb-8">The tool you're looking for doesn't exist or isn't available yet.</p>
-            <a 
+            <a
               href="/all-tools"
               className="inline-block px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
             >
@@ -41,24 +57,33 @@ const ToolPage = () => {
     );
   }
 
+  // This line was in the original code, but the IconComponent wasn't used.
+  // Based on the context, it seems like it was intended to render an icon.
+  // I will keep it here in case it's used elsewhere or for future reference,
+  // but it's not directly used in the current return statements.
+  // If it was meant to be used, it would likely replace the `i` tag with `IconComponent`.
+  const IconComponent = currentTool.icon;
+
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      
+
       <main className="flex-1 bg-neutral-50">
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-blue-600 via-blue-500 to-purple-600 text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="w-16 h-16 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <i className={`${tool.icon} text-3xl`}></i>
+              {/* Assuming tool.icon is a class name for an icon library like Font Awesome */}
+              <i className={`${currentTool.icon} text-3xl`}></i>
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold mb-4">
-              {tool.name}
+              {currentTool.name}
             </h1>
             <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-              {tool.description}
+              {currentTool.description}
             </p>
-            {tool.isPopular && (
+            {currentTool.isPopular && (
               <div className="inline-flex items-center px-4 py-2 bg-yellow-500 bg-opacity-20 text-yellow-100 rounded-full text-sm font-medium">
                 <i className="fas fa-star mr-2"></i>
                 Popular Tool
@@ -73,15 +98,15 @@ const ToolPage = () => {
             <div className="bg-white rounded-2xl shadow-xl p-8">
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-neutral-800 mb-4">
-                  {tool.name} - Coming Soon
+                  {currentTool.name} - Coming Soon
                 </h2>
                 <p className="text-neutral-600 mb-6">
                   We're working hard to bring you this amazing tool. It will be available soon!
                 </p>
-                
+
                 {/* Placeholder content */}
                 <div className="bg-neutral-100 rounded-xl p-12 mb-8">
-                  <i className={`${tool.icon} text-6xl text-neutral-400 mb-4`}></i>
+                  <i className={`${currentTool.icon} text-6xl text-neutral-400 mb-4`}></i>
                   <p className="text-neutral-500">
                     Tool interface will be available here once development is complete.
                   </p>
@@ -115,10 +140,10 @@ const ToolPage = () => {
                 {/* Call to Action */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
-                    href={`/${tool.category}-tools`}
+                    href={`/${currentTool.category}-tools`}
                     className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
                   >
-                    Browse {tool.category.charAt(0).toUpperCase() + tool.category.slice(1)} Tools
+                    Browse {currentTool.category.charAt(0).toUpperCase() + currentTool.category.slice(1)} Tools
                   </a>
                   <a
                     href="/all-tools"
@@ -132,7 +157,7 @@ const ToolPage = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </div>
   );

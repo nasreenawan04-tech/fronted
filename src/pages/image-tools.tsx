@@ -43,7 +43,7 @@ const ImageTools = () => {
 
       <div className="min-h-screen flex flex-col" data-testid="page-image-tools">
         <Header />
-        
+
         <main className="flex-1 bg-neutral-50">
           {/* Hero Section */}
           <section className="bg-gradient-to-r from-green-600 via-green-500 to-emerald-700 text-white py-16">
@@ -57,7 +57,7 @@ const ImageTools = () => {
               <p className="text-xl text-green-100 mb-8 max-w-3xl mx-auto">
                 30+ free image tools to edit, convert, resize, and optimize your photos and graphics
               </p>
-              
+
               {/* Search Bar */}
               <div className="max-w-2xl mx-auto">
                 <div className="relative">
@@ -134,7 +134,7 @@ const ImageTools = () => {
             </div>
           </section>
         </main>
-        
+
         <Footer />
       </div>
     </>

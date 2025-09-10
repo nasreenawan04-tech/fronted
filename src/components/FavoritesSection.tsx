@@ -1,10 +1,4 @@
-import { Link } from 'wouter';
-import { useFavorites } from '@/hooks/use-favorites';
-import ToolCard from '@/components/ToolCard';
-
-const FavoritesSection = () => {
-  // Always return null to hide this section
+// Favorites functionality placeholder
+export function FavoritesSection() {
   return null;
-};
-
-export default FavoritesSection;
+}

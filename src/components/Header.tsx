@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'wouter';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { searchTools } from '@/lib/search';
 import { tools } from '@/data/tools';
 import FavoritesDropdown from '@/components/FavoritesDropdown';
@@ -12,7 +11,7 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState(tools);
   const [location, setLocation] = useLocation();
-  const isMobile = useIsMobile();
+  
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -44,7 +43,7 @@ const Header = () => {
             </div>
             <span className="text-xl font-bold text-neutral-800 dark:text-neutral-100">DapsiWow</span>
           </Link>
-          
+
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             {navLinks.map((link) => (
@@ -60,19 +59,19 @@ const Header = () => {
               </Link>
             ))}
           </nav>
-          
+
           {/* Search, Favorites, Recent, and Mobile Menu */}
           <div className="flex items-center space-x-2">
             {/* Recent Tools - Hidden on mobile */}
             <div className="hidden sm:block">
               <RecentToolsDropdown />
             </div>
-            
+
             {/* Favorites - Hidden on mobile */}
             <div className="hidden sm:block">
               <FavoritesDropdown />
             </div>
-            
+
             {/* Search */}
             <button 
               className="p-2 text-neutral-600 dark:text-neutral-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
@@ -82,7 +81,7 @@ const Header = () => {
             >
               <i className="fas fa-search text-lg"></i>
             </button>
-            
+
             {/* Mobile Menu */}
             <button
               className="lg:hidden p-2 text-neutral-600 dark:text-neutral-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
@@ -94,7 +93,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="lg:hidden bg-white dark:bg-neutral-900 border-t border-gray-200 dark:border-neutral-700" data-testid="mobile-menu">
@@ -110,7 +109,7 @@ const Header = () => {
                 </div>
               </div>
             </div>
-            
+
             {navLinks.map((link) => (
               <Link
                 key={link.href}
